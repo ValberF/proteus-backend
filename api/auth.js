@@ -8,27 +8,42 @@ module.exports = app =>{
             return res.status(400).send('Insira login e senha')
         }
 
-        const user =  mysqlConnection.query(`select * from administrador where login = ${req.body.login}`)
-
-        if(!user) return res.status(400).send('Usuário não encontrado')
-
-        const isMatch = bcrypt.compareSync(req.body.senha, user.senha)
-        if(!isMatch) return res.status(401).send('Combinação de email e senha inválida!')
-
-        const now = Date.now()
-
-        payload = {
-            id: user.id,
-            login: user.login,
-            senha: user.senha,
-            iat: now,
-            exp: now + (1000 * 60 * 60 * 24)
-        }
-
-        res.json({
-            ...payload,
-            token: jwt.encode(payload, authSecret)
-        })
+        let user = null  
+        await mysqlConnection.query("select * from administrador where adm_login = '" + req.body.login + "'", (err, rows, fields) => {
+            if(!err){
+                user = rows[0]
+                console.log({...user})
+                if(!user){
+                    console.log('Usuário não encontrado')
+                    return res.status(400).send('Usuário não encontrado')
+                } 
+            
+                    const isMatch = bcrypt.compareSync(req.body.senha, user.adm_senha)
+            
+                if(!isMatch){
+                    console.log('Combinação de email e senha inválida!')
+                    return res.status(401).send('Combinação de email e senha inválida!')
+                } 
+            
+                const now = Date.now()
+            
+                payload = {
+                    id: user.adm_id,
+                    login: user.adm_login,
+                    senha: user.adm_senha,
+                    iat: now,
+                    exp: now + (1000 * 60 * 60 * 24)
+                }
+            
+                res.json({
+                     ...payload,
+                    token: jwt.encode(payload, authSecret)
+                })
+            }
+            else{
+                console.log(err)
+            }
+        }) 
     }
 
     const validateToken = (req, res) => {

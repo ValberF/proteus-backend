@@ -1,4 +1,6 @@
 module.exports = app => {
+   app.post('/login', app.api.auth.signIn)
+
    app.route('/administrador')
       .get(app.api.administrador.get)  
       .post(app.api.administrador.add)
