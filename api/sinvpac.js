@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar SinVpac
     const getu = (req,res)=>{
-        mysqlConnection.query('select * from sinvpac where sinvpac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select sintomas.sin_value, sin_nome from versaopaciente inner join sinvpac on versaopaciente.vpac_id = sinvpac_fk_vpac inner join sintomas on sinvpac_fk_sin = sintomas.sin_id where vpac_id = ?;', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else

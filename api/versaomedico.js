@@ -35,13 +35,16 @@ module.exports = app => {
         if (vmed.vmed_id == null) vmed.vmed_id = 0
         var sql = "SET @vmed_id = ?; SET @vmed_fk_ava = ?; SET @vmed_ava_glo = ?;SET @vmed_pt_tot = ?; SET @vmed_q1_per_pes = ?; SET @vmed_q2_diag_rel = ?;\
                    SET @vmed_q2_estad = ?; SET @vmed_q2_out = ?;SET @vmed_q3_feb = ?; SET @vmed_q3_dur_feb = ?; SET @vmed_q3_crtc = ?;\
-                   SET @vmed_quad1 = ?; SET @vmed_quad2 = ?;SET @vmed_quad3 = ?;SET @vmed_quad4 = ?;SET @vmed_quad5 = ?;\
+                   SET @vmed_quad1 = ?; SET @vmed_quad2 = ?;SET @vmed_quad3 = ?;SET @vmed_quad4 = ?;SET @vmed_quad5 = ?;SET @vmed_suplementacao = ?;\
+                   SET @vmed_sup_tipo = ?;SET @vmed_sup_proteina = ?;SET @vmed_sup_calorias = ?;SET @vmed_sup_omega = ?;\
                    CALL VersaoMedicoAddOrEdit(@vmed_id, @vmed_fk_ava, @vmed_ava_glo, @vmed_pt_tot, @vmed_q1_per_pes, @vmed_q2_diag_rel,\
                                          @vmed_q2_estad, @vmed_q2_out, @vmed_q3_feb, @vmed_q3_dur_feb, @vmed_q3_crtc,\
-                                         @vmed_quad1, @vmed_quad2, @vmed_quad3, @vmed_quad4, @vmed_quad5);";
+                                         @vmed_quad1, @vmed_quad2, @vmed_quad3, @vmed_quad4, @vmed_quad5, @vmed_suplementacao, @vmed_sup_tipo, @vmed_sup_proteina,\
+                                         @vmed_sup_calorias, @vmed_sup_omega);";
         mysqlConnection.query(sql, [vmed.vmed_id, vmed.vmed_fk_ava, vmed.vmed_ava_glo, vmed.vmed_pt_tot, vmed.vmed_q1_per_pes, vmed.vmed_q2_diag_rel,
                                     vmed.vmed_q2_estad, vmed.vmed_q2_out, vmed.vmed_q3_feb, vmed.vmed_q3_dur_feb, vmed.vmed_q3_crtc,
-                                    vmed.vmed_quad1, vmed.vmed_quad2, vmed.vmed_quad3, vmed.vmed_quad4, vmed.vmed_quad5] ,(err, rows, fields)=>{
+                                    vmed.vmed_quad1, vmed.vmed_quad2, vmed.vmed_quad3, vmed.vmed_quad4, vmed.vmed_quad5, 
+                                    vmed.vmed_suplementacao, vmed.vmed_sup_tipo, vmed.vmed_sup_proteina, vmed.vmed_sup_calorias, vmed.vmed_sup_omega] ,(err, rows, fields)=>{
             if(!err)
                 rows.forEach(element => {
                     if(element.constructor == Array)
@@ -58,13 +61,16 @@ module.exports = app => {
         let vmed = req.body;
         var sql = "SET @vmed_id = ?; SET @vmed_fk_ava = ?; SET @vmed_ava_glo = ?;SET @vmed_pt_tot = ?; SET @vmed_q1_per_pes = ?; SET @vmed_q2_diag_rel = ?;\
                    SET @vmed_q2_estad = ?; SET @vmed_q2_out = ?;SET @vmed_q3_feb = ?; SET @vmed_q3_dur_feb = ?; SET @vmed_q3_crtc = ?;\
-                   SET @vmed_quad1 = ?; SET @vmed_quad2 = ?;SET @vmed_quad3 = ?;SET @vmed_quad4 = ?;SET @vmed_quad5 = ?;\
+                   SET @vmed_quad1 = ?; SET @vmed_quad2 = ?;SET @vmed_quad3 = ?;SET @vmed_quad4 = ?;SET @vmed_quad5 = ?;SET @vmed_suplementacao = ?;\
+                   SET @vmed_sup_tipo = ?;SET @vmed_sup_proteina = ?;SET @vmed_sup_calorias = ?;SET @vmed_sup_omega = ?;\
                    CALL VersaoMedicoAddOrEdit(@vmed_id, @vmed_fk_ava, @vmed_ava_glo, @vmed_pt_tot, @vmed_q1_per_pes, @vmed_q2_diag_rel,\
                                          @vmed_q2_estad, @vmed_q2_out, @vmed_q3_feb, @vmed_q3_dur_feb, @vmed_q3_crtc,\
-                                         @vmed_quad1, @vmed_quad2, @vmed_quad3, @vmed_quad4, @vmed_quad5);";
+                                         @vmed_quad1, @vmed_quad2, @vmed_quad3, @vmed_quad4, @vmed_quad5, @vmed_suplementacao, @vmed_sup_tipo, @vmed_sup_proteina,\
+                                         @vmed_sup_calorias, @vmed_sup_omega);";
         mysqlConnection.query(sql, [vmed.vmed_id, vmed.vmed_fk_ava, vmed.vmed_ava_glo, vmed.vmed_pt_tot, vmed.vmed_q1_per_pes, vmed.vmed_q2_diag_rel,
                                     vmed.vmed_q2_estad, vmed.vmed_q2_out, vmed.vmed_q3_feb, vmed.vmed_q3_dur_feb, vmed.vmed_q3_crtc,
-                                    vmed.vmed_quad1, vmed.vmed_quad2, vmed.vmed_quad3, vmed.vmed_quad4, vmed.vmed_quad5] ,(err, rows, fields)=>{
+                                    vmed.vmed_quad1, vmed.vmed_quad2, vmed.vmed_quad3, vmed.vmed_quad4, vmed.vmed_quad5, 
+                                    vmed.vmed_suplementacao, vmed.vmed_sup_tipo, vmed.vmed_sup_proteina, vmed.vmed_sup_calorias, vmed.vmed_sup_omega] ,(err, rows, fields)=>{
             if(!err)
                 res.send('Atualização bem sucedida')
             else
